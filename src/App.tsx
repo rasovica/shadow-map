@@ -1,7 +1,8 @@
 import * as React from "react";
+import {login} from "./util/netlify";
 
 export const App = () => {
   return (
-      <h1>Hi</h1>
+      <button onClick={login}>Login github</button>
   );
 };
