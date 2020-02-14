@@ -4,7 +4,9 @@ import netlify from 'netlify-auth-providers'
 
 const authenticator = new netlify.default ({});
 
-export const login = () => {
+export const login = (e: Event) => {
+    e.preventDefault();
+
     return new Promise((resolve, reject) => {
         authenticator.authenticate({provider:"github", scope: "user"}, (err: any, data: any) => {
             console.log(err, data);
