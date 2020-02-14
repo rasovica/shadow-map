@@ -1,6 +1,6 @@
 import * as React from 'react'
 // @ts-ignore
-import netlify from 'netlify-auth-providers'
+import * as netlify from 'netlify-auth-providers'
 
 const authenticator = new netlify.default ({});
 
