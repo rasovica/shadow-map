@@ -1,8 +1,19 @@
 import * as React from "react";
-import {login} from "./util/netlify";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import {defaultGlobalState, GlobalContext} from "./util/state";
+import {Map} from "./routes/Map";
 
 export const App = () => {
   return (
-      <button onClick={login}>Login github</button>
+      <GlobalContext.Provider value={defaultGlobalState} >
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/">
+                        <Map />
+                    </Route>
+                </Switch>
+            </BrowserRouter>
+      </GlobalContext.Provider>
   );
 };

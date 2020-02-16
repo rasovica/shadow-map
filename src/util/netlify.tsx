@@ -4,13 +4,14 @@ import * as netlify from 'netlify-auth-providers'
 
 const authenticator = new netlify.default ({});
 
-export const login = (e: Event) => {
+export enum Providers {
+    github = "github"
+}
+
+export const login = (provider: Providers) => (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    return new Promise((resolve, reject) => {
-        authenticator.authenticate({provider:"github", scope: "user"}, (err: any, data: any) => {
-            console.log(err, data);
-            err ? reject(err) : resolve(data);
-        })
+    authenticator.authenticate({provider, scope: "user"}, (err: any, data: any) => {
+        console.log(err, data);
     });
 };

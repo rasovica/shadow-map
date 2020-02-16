@@ -1,6 +1,7 @@
 .netlify/
-node_modules/
 .idea/
+.cache/
 dist/
+node_modules/
 
 package-lock.json
