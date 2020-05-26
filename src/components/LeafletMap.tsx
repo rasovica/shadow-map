@@ -1,10 +1,11 @@
 import * as React from 'react'
 import styled from 'styled-components';
-import { Map, TileLayer } from 'react-leaflet'
+import {useContext} from "react";
+import {ZoomControl, Map, TileLayer} from 'react-leaflet';
+
 import {Debug} from "./Debug";
+import {GlobalContext} from "../util/state";
 
-
-const position = [51.505, -0.09];
 
 const MapContainer = styled.div`
     position: absolute;
@@ -19,15 +20,18 @@ const MapContainer = styled.div`
     }
 `;
 
-export const LeafletMap = () => {
+export const LeafletMap: React.FunctionComponent = () => {
+    const {location} = useContext(GlobalContext);
+
     return (
         <MapContainer>
-            <Map center={position} zoom={13}>
+            <Map center={location} zoom={13} zoomControl={false}>
                 <TileLayer
                     url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
                     attribution="FASTLY"
                 />
-                <Debug position={position} />
+                <ZoomControl zoom={13} position="topright" />
+                <Debug position={location}/>
             </Map>
         </MapContainer>
     )

@@ -1,0 +1,20 @@
+type Tile {
+    index: String!
+   	cameras: [Camera!] @relation
+}
+
+type Camera {
+		index: String!
+    uuid: String!
+    tile: [Tile] @relation
+}
+
+type User {
+	email: String!
+}
+
+type Query {
+    allTiles: [Tile!]
+    allCamera: [Camera!]
+    todosByCompletedFlag(index: String!): [Camera!]
+}

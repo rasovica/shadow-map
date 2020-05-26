@@ -1,0 +1,24 @@
+service: shadow-map
+
+package:
+  exclude:
+    - ".dist/**"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  environment:
+    IPSTACK: d6968220a6aca5a8b00e7f1f7ad1f0c9
+    FAUNADB_SECRET: fnADsoSSk_ACC2LzhSq5SXVWGqc9VZye3ARoACIi
+
+functions:
+  hello:
+    handler: src/functions/location.handler
+    events:
+      - http:
+          path: location
+          method: get
