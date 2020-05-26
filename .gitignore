@@ -1,5 +1,8 @@
 .netlify/
 .idea/
 .cache/
+.build/
+.serverless
 dist/
 node_modules/
+yarn-error.log
