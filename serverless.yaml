@@ -3,10 +3,17 @@ service: shadow-map
 package:
   exclude:
     - ".dist/**"
+    - ".cache/**"
+    - ".serverless/**"
 
 plugins:
-  - serverless-plugin-typescript
   - serverless-offline
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: 'serverless.config.js'
+    includeModules: true
 
 provider:
   name: aws
