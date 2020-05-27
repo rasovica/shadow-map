@@ -16,9 +16,15 @@ provider:
     FAUNADB_SECRET: fnADsoSSk_ACC2LzhSq5SXVWGqc9VZye3ARoACIi
 
 functions:
-  hello:
+  location:
     handler: src/functions/location.handler
     events:
       - http:
           path: location
+          method: get
+  migrate:
+    handler: src/db/index.migrate
+    events:
+      - http:
+          path: migrate
           method: get
