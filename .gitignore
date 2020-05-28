@@ -2,7 +2,8 @@
 .idea/
 .cache/
 .build/
-.serverless
+.serverless/
+.webpack/
 dist/
 node_modules/
 yarn-error.log
