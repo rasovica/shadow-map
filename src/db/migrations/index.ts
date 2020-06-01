@@ -1,5 +1,12 @@
-import base from './base';
+import {Client} from "faunadb";
 
-export default async (server) => {
-    await base(server);
+import base from './jobs/base';
+
+export default async (server: Client) => {
+    try {
+        await base(server);
+    } catch (e) {
+        console.log(e);
+    }
+
 }

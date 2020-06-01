@@ -1,20 +1,33 @@
+# User managment
+type User {
+	email: String! @unique
+	username: String! @unique
+}
+
+input CreateUserInput {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput): User! @resolver(name: "create_user")
+  loginUser(input: LoginUserInput): String! @resolver(name: "login_user")
+}
+
+# Cameras
 type Tile {
-    index: String!
-   	cameras: [Camera!] @relation
+ index: String!
+ cameras: [Camera!] @relation
 }
 
 type Camera {
-		index: String!
-    uuid: String!
-    tile: [Tile] @relation
-}
-
-type User {
-	email: String!
-}
-
-type Query {
-    allTiles: [Tile!]
-    allCamera: [Camera!]
-    todosByCompletedFlag(index: String!): [Camera!]
+ index: String!
+ uuid: String!
+ tile: [Tile] @relation
 }

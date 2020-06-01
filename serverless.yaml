@@ -5,6 +5,7 @@ package:
     - ".dist/**"
     - ".cache/**"
     - ".serverless/**"
+  individually: true
 
 plugins:
   - serverless-offline
@@ -14,6 +15,8 @@ custom:
   webpack:
     webpackConfig: 'serverless.config.js'
     includeModules: true
+  serverless-offline:
+    useChildProcesses: true
 
 provider:
   name: aws
@@ -31,6 +34,7 @@ functions:
           method: get
   migrate:
     handler: src/db/index.migrate
+    timeout: 300
     events:
       - http:
           path: migrate
