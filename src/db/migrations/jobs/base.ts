@@ -30,7 +30,7 @@ const loginUser = Lambda(["input"],
     Select(
         "secret",
         Login(
-            Match(Index("unique_User_email"), Select("username", Var("input"))),
+            Match(Index("unique_User_username"), Select("username", Var("input"))),
             {password: Select("password", Var("input"))}
         )
     )

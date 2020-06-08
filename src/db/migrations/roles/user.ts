@@ -9,14 +9,12 @@ import Index = query.Index;
 import Let = query.Let;
 import Identity = query.Identity;
 import Equals = query.Equals;
-import Get = query.Get;
 
 
 export const UserCreated = Query(
     Lambda("salaryRef", Let(
         {
-            user: Get(Var("userRef")),
-            userRef: Select( ["data", "user"], Var("user"))
+            userRef: Select( ["data", "user"], Var("Camera")),
         },
         Equals(Var("userRef"), Identity()),
     ))
