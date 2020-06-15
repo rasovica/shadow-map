@@ -9,6 +9,9 @@
     "moduleResolution": "node",
     "lib": ["es2015", "dom"],
     "rootDir": "./",
-    "jsx": "react"
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true
   }
 }

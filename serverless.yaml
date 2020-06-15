@@ -12,6 +12,8 @@ plugins:
   - serverless-webpack
 
 custom:
+  stage: ${opt:stage, self:provider.stage}
+  prefix: ${self:service}-${self:custom.stage}
   webpack:
     webpackConfig: 'serverless.config.js'
     includeModules: true
@@ -23,7 +25,23 @@ provider:
   runtime: nodejs10.x
   environment:
     IPSTACK: d6968220a6aca5a8b00e7f1f7ad1f0c9
-    FAUNADB_SECRET: fnADsoSSk_ACC2LzhSq5SXVWGqc9VZye3ARoACIi
+    USERS: ${self:custom.prefix}-users
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "Fn::GetAtt": [ Users, Arn ]
+
+resources:
+  ${file(./resources/users.yaml)}
 
 functions:
   location:
@@ -32,10 +50,10 @@ functions:
       - http:
           path: location
           method: get
-  migrate:
-    handler: src/db/index.migrate
-    timeout: 300
+
+  register:
+    handler: src/functions/register.handler
     events:
       - http:
-          path: migrate
+          path: register
           method: get
