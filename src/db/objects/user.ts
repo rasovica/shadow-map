@@ -6,9 +6,12 @@ import {
 import {Base} from "./base";
 
 @table(process.env.USERS as string)
-export class User extends Base {
+export class User extends Base<User> {
     @hashKey()
     email: string;
+
+    @attribute()
+    username: string;
 
     @attribute()
     email_confirmed: boolean;
@@ -19,3 +22,4 @@ export class User extends Base {
     @attribute()
     salt: string;
 }
+

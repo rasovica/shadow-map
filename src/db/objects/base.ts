@@ -1,6 +1,10 @@
 import {mapper} from "../index";
 
-export class Base {
+export class Base<T extends Base<T>> {
+    static create(attrs) {
+        return Object.assign(new this(), attrs);
+    }
+
     put()  {
         return mapper.put(this);
     }

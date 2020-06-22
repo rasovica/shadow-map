@@ -26,6 +26,7 @@ provider:
   environment:
     IPSTACK: d6968220a6aca5a8b00e7f1f7ad1f0c9
     USERS: ${self:custom.prefix}-users
+    APIKEYS: ${self:custom.prefix}-api-keys
 
   iamRoleStatements:
     - Effect: Allow
@@ -39,9 +40,11 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - "Fn::GetAtt": [ Users, Arn ]
+        - "Fn::GetAtt": [ ApiKeys, Arn ]
 
 resources:
-  ${file(./resources/users.yaml)}
+  - ${file(./resources/users.yaml)}
+  - ${file(./resources/api-keys.yaml)}
 
 functions:
   location:
@@ -56,4 +59,11 @@ functions:
     events:
       - http:
           path: register
-          method: get
+          method: post
+
+  login:
+    handler: src/functions/login.handler
+    events:
+      - http:
+          path: login
+          method: post
