@@ -12,7 +12,7 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <UserProvider>
         <CameraProvider>
-          <div>
+          <div className="container-of-world">
             <Map />
             <CameraEditor />
           </div>

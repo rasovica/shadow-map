@@ -11,7 +11,7 @@ import { DragHandler } from "./DragHandler";
 
 const MapWrapper = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: relative;
   z-index: 0;
 `;
