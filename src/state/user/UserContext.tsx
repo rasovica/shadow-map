@@ -1,10 +1,9 @@
 import React from "react";
-import firebase from "firebase";
-import User = firebase.User;
 import { auth } from "../firebase";
+import type firebase from "firebase";
 
 interface UserState {
-  user: User | null;
+  user: firebase.User | null;
 }
 const initialState = { user: null };
 
