@@ -10,8 +10,10 @@ const POSITION_CLASSES = {
 const MapCustomControl: React.FC<MapCustomControlProps> = (props) => {
   const { position, children } = props;
   return (
-    <div className={POSITION_CLASSES[position]}>
-      <div className="leaflet-control leaflet-bar">{children}</div>
+    <div className="leaflet-control-container">
+      <div className={POSITION_CLASSES[position]}>
+        <div className="leaflet-control leaflet-bar">{children}</div>
+      </div>
     </div>
   );
 };
