@@ -8,4 +8,5 @@ export interface Camera {
   geoIndex: string[];
   title: string;
   id: string;
+  owner: string;
 }

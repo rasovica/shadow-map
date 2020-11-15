@@ -4,6 +4,8 @@ import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 import { MapCustomControl } from "./MapCustomControl";
+import { UserContext } from "../state/user/UserContext";
+import { signInWithGoogle } from "../state/firebase";
 
 const NewCameraWrapper = styled.div`
   background: white;
@@ -19,9 +21,13 @@ interface NewCameraProps {
 }
 
 export const NewCamera: React.FC<NewCameraProps> = ({ setNewCameraMode }) => {
+  const { user } = React.useContext(UserContext);
+
   return (
     <MapCustomControl position="bottomleft">
-      <NewCameraWrapper onClick={() => setNewCameraMode()}>
+      <NewCameraWrapper
+        onClick={() => (user ? setNewCameraMode() : signInWithGoogle())}
+      >
         <FontAwesomeIcon icon={faVideo} />
       </NewCameraWrapper>
     </MapCustomControl>

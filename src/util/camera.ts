@@ -2,7 +2,7 @@ import { LatLng } from "leaflet";
 import { Camera } from "../types/Camera";
 import { Location } from "./location";
 
-export const initCamera = (loc: LatLng): Camera => ({
+export const initCamera = (loc: LatLng, uid: string): Camera => ({
   title: "Camera",
   lat: loc.lat,
   lng: loc.lng,
@@ -11,4 +11,5 @@ export const initCamera = (loc: LatLng): Camera => ({
   orientation: 90,
   geoIndex: Location.getIndexes(loc.lat, loc.lng),
   id: "tobedetermined",
+  owner: uid,
 });

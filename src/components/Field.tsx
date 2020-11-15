@@ -1,12 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-interface FieldProps {
-  value: any;
-  label: string;
-  onChange: (event: any) => void;
-}
-
 const FieldWrapper = styled.div`
   margin-bottom: 2rem;
   transition: background-color 0.2s ease;
@@ -38,7 +32,19 @@ const FieldWrapper = styled.div`
   }
 `;
 
-export const Filed: React.FC<FieldProps> = ({ value, onChange, label }) => {
+interface FieldProps {
+  value: any;
+  label: string;
+  onChange: (event: any) => void;
+  readOnly: boolean;
+}
+
+export const Filed: React.FC<FieldProps> = ({
+  value,
+  onChange,
+  label,
+  readOnly = false,
+}) => {
   const props =
     typeof value === "number"
       ? {
@@ -57,6 +63,7 @@ export const Filed: React.FC<FieldProps> = ({ value, onChange, label }) => {
         id={label}
         value={value}
         placeholder={label}
+        readOnly={readOnly}
         {...props}
       />
       <label className="label" htmlFor={label}>

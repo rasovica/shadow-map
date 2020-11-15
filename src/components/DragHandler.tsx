@@ -6,6 +6,7 @@ import { CameraContext } from "../state/camera/CameraContext";
 import { bearing } from "../util/math";
 import { NewCamera } from "./NewCamera";
 import { initCamera } from "../util/camera";
+import { UserContext } from "../state/user/UserContext";
 
 enum Modes {
   NONE,
@@ -15,14 +16,15 @@ enum Modes {
 
 export const DragHandler: React.FC = () => {
   const { active, actions } = React.useContext(CameraContext);
+  const { user } = React.useContext(UserContext);
   const [mode, setMode] = React.useState<Modes>(Modes.NONE);
 
   const map = useMapEvents({
     mousedown: (event) => {
       if (active) {
         setMode(Modes.EDIT);
-      } else if (mode === Modes.CREATE) {
-        const newCamera = initCamera(event.latlng);
+      } else if (mode === Modes.CREATE && user) {
+        const newCamera = initCamera(event.latlng, user.uid);
 
         actions?.updateCamera(newCamera);
         actions?.setActive(newCamera);
@@ -30,7 +32,7 @@ export const DragHandler: React.FC = () => {
       }
     },
     mousemove: (event) => {
-      if (active && mode === Modes.EDIT) {
+      if (active && active.owner === user?.uid && mode === Modes.EDIT) {
         const newDistance = map.distance(
           [active.lat, active.lng],
           event.latlng
@@ -53,5 +55,9 @@ export const DragHandler: React.FC = () => {
     },
   });
 
-  return <NewCamera setNewCameraMode={() => setMode(Modes.CREATE)} />;
+  return (
+    <NewCamera
+      setNewCameraMode={() => active === null && setMode(Modes.CREATE)}
+    />
+  );
 };

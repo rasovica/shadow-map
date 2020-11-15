@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
-import "@firebase/firestore";
+import "firebase/firestore";
+import "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUBWDAAWqhkzJ4oHqxghq0SXTQI_5CGKo",
@@ -12,5 +13,14 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+export const auth = firebase.auth();
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+export const signInWithGoogle = () => {
+  auth
+    .signInWithPopup(googleAuthProvider)
+    .catch(console.error)
+    .then(console.log);
+};
 
 export const camerasRef = firebase.firestore().collection("cameras");

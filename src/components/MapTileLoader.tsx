@@ -17,6 +17,7 @@ export const MapTileLoader: React.FC = () => {
   });
 
   React.useEffect(() => {
+    map.invalidateSize();
     actions?.loadLocation(map.getBounds());
   }, []);
 
@@ -52,7 +53,6 @@ export const MapTileLoader: React.FC = () => {
             i.orientation - i.angle / 2,
             i.orientation + i.angle / 2
           );
-          console.log(i);
 
           return (
             <Polygon

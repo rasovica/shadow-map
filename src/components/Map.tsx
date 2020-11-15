@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer } from "react-leaflet";
+import { Map as M } from "leaflet";
 import styled from "styled-components";
 
 import React from "react";
@@ -16,21 +17,25 @@ const MapWrapper = styled.div`
 `;
 
 export const Map = () => {
+  const map = React.useRef<M | null>(null);
+
   return (
     <MapWrapper>
       <MapContainer
         center={Ljubljana}
-        zoom={13}
+        zoom={15}
         scrollWheelZoom={true}
-        whenCreated={(m) => {
-          m.invalidateSize();
-        }}
+        whenCreated={(m) => (map.current = m)}
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"
           maxZoom={20}
+          minZoom={12}
           maxNativeZoom={18}
           attribution="FASTLY"
+          eventHandlers={{
+            load: () => map.current?.invalidateSize(),
+          }}
         />
         <MapTileLoader />
         <DragHandler />

@@ -7,6 +7,7 @@ import { Filed } from "./Field";
 import { Camera } from "../types/Camera";
 import { CloseButton, SaveButton } from "./Buttons";
 import { usePrevious } from "../hooks/usePrevious";
+import { UserContext } from "../state/user/UserContext";
 
 const CameraEditorContainer = styled("div")(
   css({
@@ -21,9 +22,10 @@ const CameraEditorContainer = styled("div")(
   }) as any
 );
 
-const EDITABLE_FIELDS = ["title"];
+const EDITABLE_FIELDS = ["title", "angle"];
 
 export const CameraEditor: React.FC = () => {
+  const { user } = useContext(UserContext);
   const { active, actions } = useContext(CameraContext);
   const prevActive = usePrevious(active);
   const [clean, setClean] = React.useState<Camera | null>(null);
@@ -34,6 +36,21 @@ export const CameraEditor: React.FC = () => {
     }
   }, [active]);
 
+  React.useEffect(() => {
+    if (clean) {
+      actions?.updateCamera({
+        ...active,
+        title: clean.title,
+        angle: clean.angle,
+      } as Camera);
+      actions?.setActive({
+        ...active,
+        title: clean.title,
+        angle: clean.angle,
+      } as Camera);
+    }
+  }, [clean]);
+
   const save = React.useCallback(() => {
     actions?.setActive(null);
 
@@ -42,6 +59,7 @@ export const CameraEditor: React.FC = () => {
         {
           ...active,
           title: clean.title,
+          angle: clean.angle,
         },
         true
       );
@@ -74,12 +92,15 @@ export const CameraEditor: React.FC = () => {
           key={key}
           value={clean?.[key as keyof Camera]}
           label={key}
+          readOnly={active?.owner !== user?.uid}
           onChange={(value) =>
             setClean((prev) => (prev ? { ...prev, [key]: value } : null))
           }
         />
       ))}
-      <SaveButton onClick={() => save()}>Save</SaveButton>
+      {active.owner === user?.uid && (
+        <SaveButton onClick={() => save()}>Save</SaveButton>
+      )}
     </CameraEditorContainer>
   );
 };
