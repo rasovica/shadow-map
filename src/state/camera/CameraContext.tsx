@@ -43,7 +43,11 @@ const actions = (state: CameraState, dispatch: (a: any) => void) => ({
       payload: camera,
     });
   },
-  deleteCamera: (c: Camera) => {
+  deleteCamera: async (c: Camera, commit = false) => {
+    if (commit) {
+      await camerasRef.doc(c.id).delete();
+    }
+
     dispatch({
       type: CameraActions.DELETE_CAMERA,
       payload: c,

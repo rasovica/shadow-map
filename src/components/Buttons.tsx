@@ -19,3 +19,9 @@ export const CloseButton = styled.button`
   margin-bottom: 2rem;
   float: right;
 `;
+
+export const ButtonRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

@@ -5,7 +5,7 @@ import css from "@styled-system/css";
 import { CameraContext } from "../state/camera/CameraContext";
 import { Filed } from "./Field";
 import { Camera } from "../types/Camera";
-import { CloseButton, SaveButton } from "./Buttons";
+import { ButtonRow, CloseButton, SaveButton } from "./Buttons";
 import { usePrevious } from "../hooks/usePrevious";
 import { UserContext } from "../state/user/UserContext";
 
@@ -99,7 +99,17 @@ export const CameraEditor: React.FC = () => {
         />
       ))}
       {active.owner === user?.uid && (
-        <SaveButton onClick={() => save()}>Save</SaveButton>
+        <ButtonRow>
+          <SaveButton onClick={() => save()}>Save</SaveButton>
+          <SaveButton
+            onClick={() => {
+              actions?.setActive(null);
+              actions?.deleteCamera(active, true);
+            }}
+          >
+            Delete
+          </SaveButton>
+        </ButtonRow>
       )}
     </CameraEditorContainer>
   );
