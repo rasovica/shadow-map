@@ -18,6 +18,7 @@
     "@fortawesome/react-fontawesome": "^0.1.12",
     "@sentry/react": "^5.27.4",
     "@sentry/tracing": "^5.27.4",
+    "@snowpack/plugin-optimize": "^0.2.9",
     "@styled-system/css": "^5.1.5",
     "@turf/sector": "^5.1.5",
     "@types/snowpack-env": "^2.3.0",
