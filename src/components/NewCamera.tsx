@@ -26,7 +26,15 @@ export const NewCamera: React.FC<NewCameraProps> = ({ setNewCameraMode }) => {
   return (
     <MapCustomControl position="bottomleft">
       <NewCameraWrapper
-        onClick={() => (user ? setNewCameraMode() : signInWithGoogle())}
+        onClick={(event) => {
+          event.stopPropagation();
+
+          if (user) {
+            setNewCameraMode();
+          } else {
+            signInWithGoogle();
+          }
+        }}
       >
         <FontAwesomeIcon icon={faVideo} />
       </NewCameraWrapper>

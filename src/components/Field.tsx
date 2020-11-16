@@ -12,7 +12,7 @@ const FieldWrapper = styled.div`
 
   .input {
     padding: 0.6rem 1rem;
-    font-size: 1rem;
+    font-size: 14px;
     border: #faed27 1px solid;
     color: #faed27;
     transition: border-color 0.2s ease;
@@ -23,6 +23,7 @@ const FieldWrapper = styled.div`
 
   .label {
     position: absolute;
+    font-size: 14px;
     top: -8px;
     left: 16px;
     text-transform: capitalize;

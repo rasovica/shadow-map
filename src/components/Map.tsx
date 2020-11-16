@@ -23,7 +23,7 @@ export const Map = () => {
     <MapWrapper>
       <MapContainer
         center={Ljubljana}
-        zoom={15}
+        zoom={16}
         scrollWheelZoom={true}
         whenCreated={(m) => (map.current = m)}
       >
