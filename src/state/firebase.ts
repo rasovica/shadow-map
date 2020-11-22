@@ -24,3 +24,4 @@ export const signInWithGoogle = () => {
 };
 
 export const camerasRef = firebase.firestore().collection("cameras");
+export const tileRef = firebase.firestore().collectionGroup("tiles");

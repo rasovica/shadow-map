@@ -1,12 +1,8 @@
-import { camerasRef } from "../firebase";
+import { tileRef } from "../firebase";
+import { Tile } from "../../types/Tile";
 
 export const getCamerasForIndex = async (index: string) => {
-  const cameras = await camerasRef
-    .where("geoIndex", "array-contains", index)
-    .get();
+  const tiles = await tileRef.where("topLevelIndex", "==", index).get();
 
-  return cameras.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  return tiles.docs.flatMap((doc) => (doc.data() as Tile).cameras);
 };

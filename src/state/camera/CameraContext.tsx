@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import { LatLngBounds } from "leaflet";
+import { h3ToParent } from "h3-js";
 
 import { CameraActions, cameraReducer } from "./reducer";
 import { Location } from "../../util/location";
@@ -55,19 +56,22 @@ const actions = (state: CameraState, dispatch: (a: any) => void) => ({
   },
   loadLocation: async (bounds: LatLngBounds) => {
     await Promise.all(
-      Location.getFeatures(bounds, 7).map(async (index) => {
-        if (state.tiles[index] === undefined) {
-          const tile = await getCamerasForIndex(index);
+      Location.getFeatures(bounds, 7)
+        .map((i) => h3ToParent(i, 5))
+        .filter((item, index, arr) => arr.indexOf(item) === index)
+        .map(async (index) => {
+          if (state.tiles[index] === undefined) {
+            const tile = await getCamerasForIndex(index);
 
-          dispatch({
-            type: CameraActions.LOAD_TILE,
-            payload: {
-              id: index,
-              cameras: tile,
-            },
-          });
-        }
-      })
+            dispatch({
+              type: CameraActions.LOAD_TILE,
+              payload: {
+                id: index,
+                cameras: tile,
+              },
+            });
+          }
+        })
     );
   },
 });
