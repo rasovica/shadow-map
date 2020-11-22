@@ -31,11 +31,11 @@ export const cameraReducer = (
         },
       };
     case CameraActions.UPDATE_CAMERA:
-      if (state.tiles[action.payload.geoIndex[2]] === undefined) {
-        state.tiles[action.payload.geoIndex[2]] = [];
+      if (state.tiles[action.payload.geoIndex[0]] === undefined) {
+        state.tiles[action.payload.geoIndex[0]] = [];
       }
 
-      const cameras = state.tiles[action.payload.geoIndex[2]] || [];
+      const cameras = state.tiles[action.payload.geoIndex[0]] || [];
       const cameraIndex = cameras!.findIndex((i) => i.id === action.payload.id);
 
       cameras[cameraIndex !== -1 ? cameraIndex : cameras.length] =
@@ -45,7 +45,7 @@ export const cameraReducer = (
         ...state,
         tiles: {
           ...state.tiles,
-          [action.payload.geoIndex[2]]: cameras,
+          [action.payload.geoIndex[0]]: cameras,
         },
       };
     case CameraActions.DELETE_CAMERA:
@@ -53,8 +53,8 @@ export const cameraReducer = (
         ...state,
         tiles: {
           ...state.tiles,
-          [action.payload.geoIndex[2]]: (
-            state.tiles[action.payload.geoIndex[2]] || []
+          [action.payload.geoIndex[0]]: (
+            state.tiles[action.payload.geoIndex[0]] || []
           ).filter((i) => i.id !== action.payload.id),
         },
       };

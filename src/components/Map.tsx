@@ -8,6 +8,7 @@ import { Ljubljana } from "../util/location";
 import { MapTileLoader } from "./MapTileLoader";
 import { Debug } from "./Debug";
 import { DragHandler } from "./DragHandler";
+import { Search } from "./Search";
 
 const MapWrapper = styled.div`
   width: 100vw;
@@ -39,6 +40,7 @@ export const Map = () => {
         />
         <MapTileLoader />
         <DragHandler />
+        <Search />
         {import.meta.env.MODE === "development" && <Debug />}
       </MapContainer>
     </MapWrapper>

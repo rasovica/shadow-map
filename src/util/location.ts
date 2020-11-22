@@ -1,8 +1,22 @@
 import { geoToH3 } from "h3-js";
 import { LatLngBounds } from "leaflet";
 import geojson2h3 from "geojson2h3";
+import { LocationSearch } from "../types/LocationSearch";
+
+const LOCATION_API =
+  "https://7usuck5f6g.execute-api.eu-central-1.amazonaws.com/v1/location";
 
 export class Location {
+  static search = async (q: string) => {
+    const url = new URL(LOCATION_API);
+    url.searchParams.append("q", q);
+
+    const res = (await fetch(url.toString()).then((res) =>
+      res.json()
+    )) as LocationSearch;
+
+    return res.results.length !== 0 ? res.results[0] : null;
+  };
   static getIndexes = (latitude: number, longitude: number) => {
     return Array(5)
       .fill(null)

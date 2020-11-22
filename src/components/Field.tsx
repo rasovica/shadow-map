@@ -1,14 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
-const FieldWrapper = styled.div`
+const FieldWrapper = styled.div<{ fullWidth: boolean }>`
   margin-bottom: 2rem;
   transition: background-color 0.2s ease;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   position: relative;
-  width: 100%;
   display: flex;
+
+  ${({ fullWidth }) => fullWidth && "width: 100%;"}
+
+  input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
 
   .input {
     padding: 0.6rem 1rem;
@@ -38,6 +50,7 @@ interface FieldProps {
   label: string;
   onChange: (event: any) => void;
   readOnly: boolean;
+  fullWidth?: boolean;
 }
 
 export const Filed: React.FC<FieldProps> = ({
@@ -45,6 +58,7 @@ export const Filed: React.FC<FieldProps> = ({
   onChange,
   label,
   readOnly = false,
+  fullWidth = true,
 }) => {
   const props =
     typeof value === "number"
@@ -58,7 +72,7 @@ export const Filed: React.FC<FieldProps> = ({
         };
 
   return (
-    <FieldWrapper>
+    <FieldWrapper fullWidth={fullWidth}>
       <input
         className="input"
         id={label}
