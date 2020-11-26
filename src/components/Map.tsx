@@ -1,7 +1,6 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { TileLayer, MapContainer } from "react-leaflet";
 import { Map as M } from "leaflet";
 import styled from "styled-components";
-
 import React from "react";
 
 import { Ljubljana } from "../util/location";
@@ -19,12 +18,34 @@ const MapWrapper = styled.div`
 
 export const Map = () => {
   const map = React.useRef<M | null>(null);
+  const tileLayer = React.useRef<any | null>(null);
+  const [retried, setRetried] = React.useState<Record<string, boolean>>({});
+
+  const retry = React.useCallback(
+    (error) => {
+      if (tileLayer.current !== null) {
+        const tileUrl = new URL(tileLayer.current!.getTileUrl(error.coords));
+
+        if (!retried[tileUrl.toString()]) {
+          setRetried((prev) => ({
+            ...prev,
+            [tileUrl.toString()]: true,
+          }));
+
+          tileUrl.searchParams.append("retry", "1");
+          error.tile.src = tileUrl.toString();
+        }
+      }
+    },
+    [JSON.stringify(retried), setRetried]
+  );
 
   return (
     <MapWrapper>
       <MapContainer
         center={Ljubljana}
-        zoom={16}
+        zoom={14}
+        zoomControl={false}
         scrollWheelZoom={true}
         whenCreated={(m) => (map.current = m)}
       >
@@ -32,10 +53,12 @@ export const Map = () => {
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"
           maxZoom={20}
           minZoom={12}
+          ref={tileLayer}
           maxNativeZoom={18}
           attribution="FASTLY"
           eventHandlers={{
             load: () => map.current?.invalidateSize(),
+            tileerror: retry,
           }}
         />
         <MapTileLoader />
